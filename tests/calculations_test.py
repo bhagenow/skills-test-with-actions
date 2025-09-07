@@ -1,6 +1,7 @@
 # System Modules
 import sys
 import os
+import math
 
 # Installed Modules
 # None
@@ -63,26 +64,63 @@ def test_get_nth_fibonacci_ten():
     # Arrange
     n = 10
 
-    # Act
-    result = get_nth_fibonacci(n)
+    def test_area_of_circle_negative_radius():
+        """Test with a negative radius (should raise ValueError)."""
+        # Arrange
+        radius = -1
 
-    # Assert
-    assert result == 55
+        # Act & Assert
+        try:
+            area_of_circle(radius)
+            assert False, "Expected ValueError for negative radius"
+        except ValueError as e:
+            assert str(e) == "Radius cannot be negative"
 
-def test_area_of_circle_negative_radius():
-   """Test with a negative radius to raise ValueError."""
-   # Arrange
-   radius = -1
 
-   # Act & Assert
-   with self.assertRaises(ValueError):
-      area_of_circle(radius)
+    def test_get_nth_fibonacci_negative():
+        """Test with negative n (should raise ValueError)."""
+        # Arrange
+        n = -5
 
-def test_get_nth_fibonacci_negative():
-   """Test with a negative number to raise ValueError."""
-   # Arrange
-   n = -1
+        # Act & Assert
+        try:
+            get_nth_fibonacci(n)
+            assert False, "Expected ValueError for negative n"
+        except ValueError as e:
+            assert str(e) == "n cannot be negative"
 
-   # Act & Assert
-   with self.assertRaises(ValueError):
-      get_nth_fibonacci(n)
+
+    def test_area_of_circle_large_radius():
+        """Test with a large radius."""
+        # Arrange
+        radius = 1000
+
+        # Act
+        result = area_of_circle(radius)
+
+        # Assert
+        assert abs(result - (math.pi * 1000 ** 2)) < 1e-5
+
+
+    def test_get_nth_fibonacci_two():
+        """Test with n=2."""
+        # Arrange
+        n = 2
+
+        # Act
+        result = get_nth_fibonacci(n)
+
+        # Assert
+        assert result == 1
+
+
+    def test_get_nth_fibonacci_large():
+        """Test with a larger n."""
+        # Arrange
+        n = 20
+
+        # Act
+        result = get_nth_fibonacci(n)
+
+        # Assert
+        assert result == 6765
